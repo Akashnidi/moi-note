@@ -1,16 +1,15 @@
-mport { initializeApp } from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore@
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  // Replace with your Firebase config
-  apiKey: "your-api-key",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "your-app-id"
+  apiKey: "AIzaSyClrySCTPrIQbbgkngypH4mKWzwmdel1dQ",
+  authDomain: "moi-note-4c429.firebaseapp.com",
+  projectId: "moi-note-4c429",
+  storageBucket: "moi-note-4c429.firebasestorage.app",
+  messagingSenderId: "847449157538",
+  appId: "1:847449157538:web:d95096b807ab4a86244cfb"
 };
 
 const app = initializeApp(firebaseConfig);
