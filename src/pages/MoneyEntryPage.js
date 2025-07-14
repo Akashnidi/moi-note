@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, addDoc, query, orderBy, onSnapshot, doc, getDoc } from 'firebase/firestore';
+import { collection, addDoc, query, orderBy, onSnapshot, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -69,7 +69,7 @@ const MoneyEntryPage = ({ user, functionData }) => {
 
       setSuccess('Entry added successfully!');
       setFormData({ guestName: '', address: '', amount: '' });
-      
+
       setTimeout(() => setSuccess(''), 3000);
     } catch (error) {
       setError('Error adding entry: ' + error.message);
@@ -79,17 +79,17 @@ const MoneyEntryPage = ({ user, functionData }) => {
 
   const generatePDF = () => {
     const doc = new jsPDF();
-    
+
     // Add title
     doc.setFontSize(20);
     doc.text(`${functionData.functionName} - Money Collection Report`, 20, 20);
-    
+
     // Add function details
     doc.setFontSize(12);
     doc.text(`Date: ${functionData.date}`, 20, 35);
     doc.text(`Host: ${functionData.hostName}`, 20, 45);
     doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 20, 55);
-    
+
     // Prepare table data
     const tableData = entries.map((entry, index) => [
       index + 1,
@@ -99,10 +99,10 @@ const MoneyEntryPage = ({ user, functionData }) => {
       entry.enteredBy,
       entry.timestamp.toDate().toLocaleDateString()
     ]);
-    
+
     // Calculate total
     const total = entries.reduce((sum, entry) => sum + entry.amount, 0);
-    
+
     // Add table
     doc.autoTable({
       head: [['S.No', 'Guest Name', 'Address', 'Amount', 'Entered By', 'Date']],
@@ -111,13 +111,13 @@ const MoneyEntryPage = ({ user, functionData }) => {
       styles: { fontSize: 10 },
       headStyles: { fillColor: [102, 126, 234] }
     });
-    
+
     // Add total
     const finalY = doc.lastAutoTable.finalY + 10;
     doc.setFontSize(14);
     doc.text(`Total Amount: ₹${total.toLocaleString()}`, 20, finalY);
     doc.text(`Total Entries: ${entries.length}`, 20, finalY + 10);
-    
+
     doc.save(`${functionData.functionName}_Report.pdf`);
   };
 
@@ -142,13 +142,13 @@ const MoneyEntryPage = ({ user, functionData }) => {
 
       <div className="card">
         <h3>Add New Entry</h3>
-        
+
         {success && (
           <div className="alert alert-success">
             {success}
           </div>
         )}
-        
+
         {error && (
           <div className="alert alert-error">
             {error}
@@ -196,7 +196,7 @@ const MoneyEntryPage = ({ user, functionData }) => {
           <button type="submit" className="btn" disabled={loading}>
             {loading ? 'Adding...' : 'Add Entry'}
           </button>
-          
+
           <button type="button" className="btn btn-secondary" onClick={generatePDF}>
             Generate PDF Report
           </button>
