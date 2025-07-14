@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, addDoc, query, orderBy, onSnapshot, doc, getDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, query, orderBy, onSnapshot, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
